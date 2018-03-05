@@ -49,7 +49,9 @@ public class PythonType extends PythonObject {
      * this PythonType.
      */
     public PythonObject instantiate() {
-        throw new UnsupportedOperationException("not implemented yet");
+        //throw new UnsupportedOperationException("not implemented yet");
+        PythonObject newInstance = new PythonObject(this);
+        return newInstance;
     }
 
     @Override
