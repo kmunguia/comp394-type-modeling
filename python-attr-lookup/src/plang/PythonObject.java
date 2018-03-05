@@ -71,7 +71,7 @@ public class PythonObject {
      */
     public final PythonObject get(String attrName) throws PythonAttributeException {
         //throw new UnsupportedOperationException("not implemented yet");
-        attrs.put(attrName, attrs.get(attrName));
+        //attrs.put(attrName, attrs.get(attrName));
         if(!(this.attrs.containsKey(attrName))){
             throw new PythonAttributeException(this, attrName);
 
