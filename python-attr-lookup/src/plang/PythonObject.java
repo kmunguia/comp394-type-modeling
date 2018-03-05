@@ -70,7 +70,14 @@ public class PythonObject {
      * @throws PythonAttributeException When there is no attribute on this object with that name.
      */
     public final PythonObject get(String attrName) throws PythonAttributeException {
-        throw new UnsupportedOperationException("not implemented yet");
+        //throw new UnsupportedOperationException("not implemented yet");
+        if(!(this.attrs.containsKey(attrName))){
+            throw new PythonAttributeException(this, attrName);
+
+        }
+        PythonObject attr = this.attrs.get(attrName);
+        return attr;
+
     }
 
     /**
@@ -82,7 +89,11 @@ public class PythonObject {
      * @param value Its new value
      */
     public final void set(String attrName, PythonObject value) {
-        throw new UnsupportedOperationException("not implemented yet");
+        //throw new UnsupportedOperationException("not implemented yet");
+        if(attrs.containsKey(attrName)){
+            attrs.putIfAbsent(attrName, value);
+            attrs.put(attrName,value);
+        }
     }
 
     @Override
