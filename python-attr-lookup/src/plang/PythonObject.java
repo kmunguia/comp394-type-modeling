@@ -70,16 +70,31 @@ public class PythonObject {
      * @throws PythonAttributeException When there is no attribute on this object with that name.
      */
     public final PythonObject get(String attrName) throws PythonAttributeException {
-        //throw new UnsupportedOperationException("not implemented yet");
-        //attrs.put(attrName, attrs.get(attrName));
-        if(!(this.attrs.containsKey(attrName))){
-            throw new PythonAttributeException(this, attrName);
+        //for (PythonObject object: getMRO()) {
+        this.buildMRO();
+        for (PythonObject obj: this.getMRO()) {
+            if(!(obj.attrs.containsKey(attrName)) ){
+                throw new PythonAttributeException(obj, attrName);
+            }
 
         }
-        PythonObject attr = this.attrs.get(attrName);
+        PythonObject attr = attrs.get(attrName);
         return attr;
+        }
+//            if(!(attrs.containsKey(attrName)) ){
+//                throw new PythonAttributeException(this, attrName);
+//                }
+//                PythonObject attr = attrs.get(attrName);
+//            return attr;
+//        }
+//        if(!(attrs.containsKey(attrName)) ){
+//            throw new PythonAttributeException(this, attrName);
+//
+//        }
+//        PythonObject attr = attrs.get(attrName);
+//        return attr;
+        //return attr;
 
-    }
 
     /**
      * Add or changes the value of an attribute on this object. Note that it sets the value for
@@ -91,14 +106,34 @@ public class PythonObject {
      */
     public final void set(String attrName, PythonObject value) {
         //throw new UnsupportedOperationException("not implemented yet");
-        if(attrs.containsKey(attrName)){
-            attrs.put(attrName,value);
-        }
-        else {
-            this.attrs.put(attrName,value);
-        }
-    }
+        this.buildMRO();
+        for (PythonObject obj: this.getMRO()) {
+            for (PythonObject obj2: obj.getMRO()) {
+                if(obj2.attrs.containsKey(attrName)){
+                    obj2.attrs.put(attrName,value);
+                }
+                else {
+                    obj2.attrs.put(attrName,value);
+                }
+            }
 
+        }
+//        if(attrs.containsKey(attrName)){
+//            this.attrs.put(attrName,value);
+//        }
+//        else {
+//            attrs.put(attrName,value);
+//        }
+//        PythonObject newtype = this.getType().instantiate();
+//        if(newtype.attrs.containsKey(attrName)) {
+//            newtype.attrs.put(attrName,value);
+//
+//        }
+//        else{
+//            newtype.attrs.put(attrName,value);
+//        }
+
+    }
     @Override
     public String toString() {
         return "PythonObject<" + getType().getName() + ">" + attrs;
