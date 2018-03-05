@@ -71,6 +71,7 @@ public class PythonObject {
      */
     public final PythonObject get(String attrName) throws PythonAttributeException {
         //throw new UnsupportedOperationException("not implemented yet");
+        attrs.put(attrName, attrs.get(attrName));
         if(!(this.attrs.containsKey(attrName))){
             throw new PythonAttributeException(this, attrName);
 
@@ -91,8 +92,10 @@ public class PythonObject {
     public final void set(String attrName, PythonObject value) {
         //throw new UnsupportedOperationException("not implemented yet");
         if(attrs.containsKey(attrName)){
-            attrs.putIfAbsent(attrName, value);
             attrs.put(attrName,value);
+        }
+        else {
+            this.attrs.put(attrName,value);
         }
     }
 
